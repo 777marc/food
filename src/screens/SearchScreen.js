@@ -1,42 +1,34 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import SearchBar from "../components/SearchBar";
-import yelp from "../api/yelp";
+import useResults from "../hooks/useResults";
+import ResultsList from "../components/ResultsList";
 
 const SearchScreen = () => {
   const [term, setTerm] = useState("");
-  const [results, setResults] = useState([]);
-  const [errors, setErrors] = useState("");
+  const [searcAPI, results, errors] = useResults();
 
-  const searcAPI = async (searchTerm) => {
-    try {
-      const response = await yelp.get("/search", {
-        params: {
-          term: searchTerm,
-          location: "orlando, fl",
-          limit: 25,
-        },
-      });
-      setResults(response.data.businesses);
-    } catch (err) {
-      setErrors("there was a problem completing your request");
-    }
+  const filterResultsByPrice = (price) => {
+    return results.filter((res) => res.price === price);
   };
-
-  // iniitial load
-  useEffect(() => {
-    searcAPI("pasta");
-  }, []);
 
   return (
     <View style={styles.background}>
       <SearchBar
         term={term}
         onTermChange={setTerm}
-        onTermSubmitted={searcAPI}
+        onTermSubmitted={() => {
+          searcAPI(term);
+        }}
       />
       <Text style={styles.text}>we have {results.length} results</Text>
       {errors ? <Text>{errors}</Text> : null}
+      <ResultsList title="Economical $" results={filterResultsByPrice("$")} />
+      <ResultsList title="Mid-Range $$" results={filterResultsByPrice("$$")} />
+      <ResultsList
+        title="Expensive $$$"
+        results={filterResultsByPrice("$$$")}
+      />
     </View>
   );
 };
@@ -47,7 +39,6 @@ const styles = StyleSheet.create({
   },
   text: {
     padding: 15,
-    color: "blue",
   },
 });
 
