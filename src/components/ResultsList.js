@@ -5,7 +5,9 @@ import ResultItem from "./ResultItem";
 const ResultsList = ({ title, results }) => {
   return (
     <View>
-      <Text style={styles.text}>{title}</Text>
+      <Text style={styles.text}>
+        {title} : {results.length} results
+      </Text>
       <View style={styles.view}>
         <FlatList
           keyExtractor={(result) => result.id}
@@ -13,7 +15,8 @@ const ResultsList = ({ title, results }) => {
           renderItem={({ item }) => {
             return <ResultItem result={item} />;
           }}
-          horizontal={true}
+          horizontal
+          showsHorizontalScrollIndicator={false}
         />
       </View>
     </View>
@@ -22,10 +25,11 @@ const ResultsList = ({ title, results }) => {
 
 const styles = StyleSheet.create({
   view: {
-    padding: 5,
     flexDirection: "row",
   },
   text: {
+    marginTop: 5,
+    marginHorizontal: 15,
     fontSize: 16,
     fontWeight: "bold",
   },

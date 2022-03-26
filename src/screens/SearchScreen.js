@@ -21,14 +21,11 @@ const SearchScreen = () => {
           searcAPI(term);
         }}
       />
-      <Text style={styles.text}>we have {results.length} results</Text>
+
       {errors ? <Text>{errors}</Text> : null}
-      <ResultsList title="Economical $" results={filterResultsByPrice("$")} />
-      <ResultsList title="Mid-Range $$" results={filterResultsByPrice("$$")} />
-      <ResultsList
-        title="Expensive $$$"
-        results={filterResultsByPrice("$$$")}
-      />
+      <ResultsList title="Economical" results={filterResultsByPrice("$")} />
+      <ResultsList title="Mid-Range" results={filterResultsByPrice("$$")} />
+      <ResultsList title="Expensive" results={filterResultsByPrice("$$$")} />
     </View>
   );
 };
