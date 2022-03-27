@@ -1,1 +1,1 @@
-# Sample React Native app w/ api integration to Yelp
+## Sample React Native app w/ api integration to Yelp
