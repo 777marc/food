@@ -7,6 +7,8 @@ export default () => {
 
   const searcAPI = async (searchTerm) => {
     try {
+      setErrors("");
+
       const response = await yelp.get("/search", {
         params: {
           term: searchTerm,
